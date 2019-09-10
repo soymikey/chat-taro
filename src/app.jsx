@@ -22,12 +22,13 @@ class App extends Component {
 
     pages: [
       // 'pages/login/login',
+      'pages/user/user',
       'pages/explore/explore',
       'pages/contact/contact',
       'pages/home/home',
 
 
-      'pages/user/user',
+
     ],
     window: {
       backgroundTextStyle: 'light',
