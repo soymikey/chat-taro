@@ -7,9 +7,11 @@ page{
   padding: 0;
   line-height: 1.6;
   font-family: -apple-system-font, "Helvetica Neue", sans-serif;
+  background-color: $theme-Color;
+
 }
 .main-container{
-  height: 100%;
+
   background-color: $theme-Color;
 
 }

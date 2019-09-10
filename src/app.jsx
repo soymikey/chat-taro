@@ -5,6 +5,7 @@ import 'taro-ui/dist/style/index.scss' // 全局引入一次即可
 
 import Index from './pages/index'
 import configStore from './store'
+import './styles/iconfont.css'
 import './styles/style.scss'
 import './app.scss'
 
@@ -22,10 +23,13 @@ class App extends Component {
 
     pages: [
       // 'pages/login/login',
+
+      'pages/home/home',
+      'pages/home/conversation/conversation',
       'pages/user/user',
       'pages/explore/explore',
       'pages/contact/contact',
-      'pages/home/home',
+
 
 
 

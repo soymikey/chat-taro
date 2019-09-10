@@ -1,6 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
-import { AtList, AtListItem,AtSearchBar } from "taro-ui"
+import { AtList, AtListItem, AtSearchBar } from "taro-ui"
 
 import './home.scss'
 import avartar1 from '../../assets/avartar.png'
@@ -21,21 +21,25 @@ export default class Home extends Component {
     }
   }
 
-  componentWillMount () { }
+  componentWillMount() { }
 
-  componentDidMount () { }
+  componentDidMount() { }
 
-  componentWillUnmount () { }
+  componentWillUnmount() { }
 
-  componentDidShow () { }
+  componentDidShow() { }
 
-  componentDidHide () { }
-  onChangeSearch(value){
-console.log(value)
+  componentDidHide() { }
+  onChangeSearch(value) {
+    console.log(value)
   }
-  render () {
+  goToConverstationPage(value){
+    console.log('value',value)
+    Taro.navigateTo({url: '/pages/home/conversation/conversation?id='+value,})
+  }
+  render() {
 
-const {searchTitle}=this.state
+    const { searchTitle } = this.state
     return (
       <View className='main-container'>
 
@@ -45,68 +49,33 @@ const {searchTitle}=this.state
         />
         <AtList>
 
-  <AtListItem
-    title='Taro 开发交流群'
-    note={avartar1}
-    thumb={avartar1}
-  />
-  <AtListItem
-    title='Taro 开发交流群'
-    note={avartar2}
-    thumb={avartar2}
-  />
-  <AtListItem
-    title='Taro 开发交流群'
-    note={avartar3}
-    thumb={avartar3}
-  />
-  <AtListItem
-    title='Taro 开发交流群'
-    note={avartar4}
-    thumb={avartar4}
-  />
-  <AtListItem
-    title='Taro 开发交流群'
-    note={avartar1}
-    thumb={avartar1}
-  />
-  <AtListItem
-    title='Taro 开发交流群'
-    note={avartar2}
-    thumb={avartar2}
-  />
-  <AtListItem
-    title='Taro 开发交流群'
-    note={avartar3}
-    thumb={avartar3}
-  />
-  <AtListItem
-    title='Taro 开发交流群'
-    note={avartar4}
-    thumb={avartar4}
-  />
-  <AtListItem
-    title='Taro 开发交流群'
-    note={avartar1}
-    thumb={avartar1}
-  />
-  <AtListItem
-    title='Taro 开发交流群'
-    note={avartar2}
-    thumb={avartar2}
-  />
-  <AtListItem
-    title='Taro 开发交流群'
-    note={avartar3}
-    thumb={avartar3}
-  />
-  <AtListItem
-    title='Taro 开发交流群'
-    note={avartar4}
-    thumb={avartar4}
-  />
+          <AtListItem
+            title='Taro 开发交流群'
+            note={avartar1}
+            thumb={avartar1}
+            onClick={this.goToConverstationPage.bind(this,avartar1)}
+          />
+          <AtListItem
+            title='Taro 开发交流群'
+            note={avartar2}
+            thumb={avartar2}
+            onClick={this.goToConverstationPage.bind(this,avartar2)}
+          />
+          <AtListItem
+            title='Taro 开发交流群'
+            note={avartar3}
+            thumb={avartar3}
+            onClick={this.goToConverstationPage.bind(this,avartar3)}
+          />
+          <AtListItem
+            title='Taro 开发交流群'
+            note={avartar4}
+            thumb={avartar4}
+            onClick={this.goToConverstationPage.bind(this,avartar4)}
+          />
 
-</AtList>
+
+        </AtList>
       </View>
     )
   }

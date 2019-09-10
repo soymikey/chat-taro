@@ -2,7 +2,7 @@
   "miniprogramRoot": "./dist",
   "projectname": "chat-taro",
   "description": "chat taro",
-  "appid": "touristappid",
+  "appid": "wxacfe5ae4fd8e4010",
   "setting": {
     "urlCheck": true,
     "es6": false,

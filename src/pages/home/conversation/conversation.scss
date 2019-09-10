@@ -1,0 +1,41 @@
+
+.padding-top{
+  padding-top: 20px
+}
+.padding-bottom{
+  padding-bottom: 20px
+}
+.my-conversation-wrapper{
+  margin:20px 0 20px 0;
+
+
+  .my-text-wrapper{
+    background-color: #A9EA7A;
+    border-radius:5%;
+  margin-right:20px;
+  padding:20px;
+  }
+}
+
+.other-conversation-wrapper{
+  margin:20px 0 20px 0;
+  .other-text-wrapper{
+    background-color: #FFFFFF;
+    border-radius:5%;
+  margin-right:20px;
+  padding:20px;
+  }
+}
+.input-wrapper{
+  position: fixed;
+  bottom: 0;
+  background-color: #F6F6F6;
+  padding:20px 10px;
+box-sizing:border-box;
+.icon-wrapper{
+  text-align: center;
+}
+  .at-input{
+    margin-left: 0;
+  }
+}
