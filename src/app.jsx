@@ -22,8 +22,9 @@ class App extends Component {
 
     pages: [
       // 'pages/login/login',
-      'pages/home/home',
       'pages/contact/contact',
+      'pages/home/home',
+
       'pages/explore/explore',
       'pages/user/user',
     ],
