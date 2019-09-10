@@ -1,0 +1,30 @@
+
+$theme-Color:#EDEDED;
+$green-Color:#04BE02;
+page{
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+  font-family: -apple-system-font, "Helvetica Neue", sans-serif;
+}
+.main-container{
+  height: 100%;
+  background-color: $theme-Color;
+
+}
+.green{
+  background: $green-Color;
+}
+
+// 修改taro ui
+.at-search-bar{
+background-color: $theme-Color
+}
+.at-search-bar__action{
+  background-color:$green-Color
+}
+.at-list__item--thumb .item-thumb{
+  height: 100rpx;
+  width: 100rpx;
+}
