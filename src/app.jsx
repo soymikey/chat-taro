@@ -22,10 +22,11 @@ class App extends Component {
 
     pages: [
       // 'pages/login/login',
+      'pages/explore/explore',
       'pages/contact/contact',
       'pages/home/home',
 
-      'pages/explore/explore',
+
       'pages/user/user',
     ],
     window: {
