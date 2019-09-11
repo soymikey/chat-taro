@@ -19,17 +19,21 @@ const store = configStore()
 
 class App extends Component {
 
+  // eslint-disable-next-line react/sort-comp
   config = {
 
     pages: [
       // 'pages/login/login',
+      'pages/home/home',//主页
+      'pages/home/addFriend/addFriend',// 添加好友
+      'pages/commonPages/friendDetails/friendDetails',//好友详情
 
-      'pages/home/home',
-      'pages/home/conversation/conversation',
-      'pages/home/addFriend/addFriend',
-      'pages/user/user',
-      'pages/explore/explore',
-      'pages/contact/contact',
+      'pages/home/conversation/conversation',//聊天页面
+      'pages/home/friendRequest/friendRequest',//好友请求
+
+      'pages/user/user',//个人
+      'pages/explore/explore',//发现
+      'pages/contact/contact',//联系人
     ],
     window: {
       backgroundTextStyle: 'light',

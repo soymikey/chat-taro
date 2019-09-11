@@ -7,6 +7,12 @@ export default class App extends Component {
   config = {
     navigationBarTitleText: '微信',
   }
+  constructor() {
+    super()
+    this.state = {
+
+    }
+  }
 
   componentWillMount () {}
 

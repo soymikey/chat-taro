@@ -60,14 +60,20 @@ export default class Home extends Component {
   closeShowMoreOptions() {
 
     this.setState({ isShowMoreOptions: false })
-    Taro.showTabBar()
+    Taro.showTabBar().catch(err=>{
+
+    })
   }
   goToConverstationPage(value) {
     Taro.navigateTo({ url: '/pages/home/conversation/conversation?id=' + value, })
   }
   handlerMoreOptionsItemButton(value){
     if(value==='添加朋友'){
-      Taro.navigateTo({ url: '/pages/home/addFriend/addFriend', })
+      Taro.showTabBar()
+       this.setState({ isShowMoreOptions: false },function (){
+        Taro.navigateTo({ url: '/pages/home/addFriend/addFriend', })
+       })
+
     }else{
       Taro.showToast({
         title: value+'功能开发中..',
@@ -95,7 +101,6 @@ export default class Home extends Component {
 
 
         <AtList>
-
           <AtListItem
             title='Taro 开发交流群'
             note={avartar1}
