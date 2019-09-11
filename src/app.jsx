@@ -32,8 +32,11 @@ class App extends Component {
       'pages/home/friendRequest/friendRequest',//好友请求
 
       'pages/user/user',//个人
+      'pages/user/userDetails/userDetails',//个人信息
+      'pages/user/userSetting/userSetting',//个人设置
       'pages/explore/explore',//发现
       'pages/contact/contact',//联系人
+      'pages/contact/friendVerify/friendVerify',//联系人
     ],
     window: {
       backgroundTextStyle: 'light',

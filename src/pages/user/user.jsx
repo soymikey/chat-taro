@@ -26,6 +26,12 @@ export default class User extends Component {
   componentDidShow() { }
 
   componentDidHide() { }
+  goToUserSetting(){
+    Taro.navigateTo({url:'/pages/user/userSetting/userSetting'})
+  }
+  goToUserDetails(){
+    Taro.navigateTo({url:'/pages/user/userDetails/userDetails'})
+  }
 
   render() {
     return (
@@ -33,6 +39,7 @@ export default class User extends Component {
         <View className='first-List-Item'>
           <AtList >
             <AtListItem
+              onClick={this.goToUserDetails.bind(this)}
               title='米高'
               note='微信号:soymikey'
               thumb={avartar1}
@@ -80,6 +87,7 @@ export default class User extends Component {
 
         <AtList >
           <AtListItem
+            onClick={this.goToUserSetting.bind(this)}
             arrow='right'
 
             title='设置'

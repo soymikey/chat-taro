@@ -33,6 +33,9 @@ export default class Contact extends Component {
     console.log(value)
   }
 
+goToFriendVerify(){
+Taro.navigateTo({url:'/pages/contact/friendVerify/friendVerify'})
+}
   render() {
     const { searchTitle } = this.state
 
@@ -43,7 +46,9 @@ export default class Contact extends Component {
           onChange={this.onChangeSearch.bind(this)}
         />
         <AtList>
+
           <AtListItem
+            onClick={this.goToFriendVerify.bind(this)}
             title={avartar1}
             thumb={avartar1}
           />

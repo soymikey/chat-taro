@@ -51,7 +51,7 @@ export default class Home extends Component {
   moreOptionsButtonHandler() {
     this.setState({ isShowMoreOptions: !this.state.isShowMoreOptions }, () => {
       if (this.state.isShowMoreOptions) {
-        Taro.hideTabBar()
+         Taro.hideTabBar()
       } else {
         Taro.showTabBar()
       }
