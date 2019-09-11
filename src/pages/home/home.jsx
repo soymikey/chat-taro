@@ -13,6 +13,7 @@ export default class Home extends Component {
   config = {
     navigationBarTitleText: '微信',
 
+
   }
   constructor() {
     super()
@@ -23,7 +24,13 @@ export default class Home extends Component {
 
   componentWillMount() { }
 
-  componentDidMount() { }
+  componentDidMount() {
+    // Taro.removeTabBarBadge({ index: 0,})
+    Taro.setTabBarBadge({
+      index: 0,
+      text: '20'
+    })
+  }
 
   componentWillUnmount() { }
 

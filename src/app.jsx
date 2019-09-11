@@ -44,29 +44,29 @@ class App extends Component {
     },
     tabBar: {
       color: "#666",
-      selectedColor: "#b4282d",
+      selectedColor: "#57BE6A",
       backgroundColor: "#fafafa",
       borderStyle: 'black',
 
     list: [{
       pagePath: "pages/home/home",
-      iconPath: "./assets/tab-bar/home.png",
-      selectedIconPath: "./assets/tab-bar/home-active.png",
+      iconPath: "./assets/tabBar/wechat.png",
+      selectedIconPath: "./assets/tabBar/wechat-actived.png",
       text: "微信"
     }, {
       pagePath: "pages/contact/contact",
-      iconPath: "./assets/tab-bar/cate.png",
-      selectedIconPath: "./assets/tab-bar/cate-active.png",
+      iconPath: "./assets/tabBar/contact.png",
+      selectedIconPath: "./assets/tabBar/contact-actived.png",
       text: "通讯录"
     }, {
       pagePath: "pages/explore/explore",
-      iconPath: "./assets/tab-bar/cart.png",
-      selectedIconPath: "./assets/tab-bar/cart-active.png",
+      iconPath: "./assets/tabBar/explore.png",
+      selectedIconPath: "./assets/tabBar/explore-actived.png",
       text: "发现"
     }, {
       pagePath: "pages/user/user",
-      iconPath: "./assets/tab-bar/user.png",
-      selectedIconPath: "./assets/tab-bar/user-active.png",
+      iconPath: "./assets/tabBar/user.png",
+      selectedIconPath: "./assets/tabBar/user-actived.png",
       text: "我的"
     }]
     }
