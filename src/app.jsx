@@ -2,9 +2,9 @@ import '@tarojs/async-await'
 import Taro, { Component } from '@tarojs/taro'
 import { Provider } from '@tarojs/redux'
 import 'taro-ui/dist/style/index.scss' // 全局引入一次即可
-
+import 'weapp-cookie'
 import Index from './pages/index'
-import configStore from './store'
+import configStore from './newStore'
 import './styles/iconfont.css'
 import './styles/style.scss'
 import './app.scss'
@@ -23,7 +23,8 @@ class App extends Component {
   config = {
 
     pages: [
-      // 'pages/login/login',
+      //  'pages/index/index',
+       'pages/login/login',
       'pages/home/home',//主页
       'pages/home/addFriend/addFriend',// 添加好友
       'pages/commonPages/friendDetails/friendDetails',//好友详情

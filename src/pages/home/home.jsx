@@ -1,4 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
+import { connect } from '@tarojs/redux'
+
 import { View, Text } from '@tarojs/components'
 import { AtList, AtListItem, AtSearchBar, AtIcon, AtActionSheet, AtActionSheetItem } from "taro-ui"
 
@@ -8,6 +10,16 @@ import avartar2 from '../../assets/me.jpg'
 import avartar3 from '../../assets/other.jpg'
 import avartar4 from '../../assets/logo.png'
 
+import { getUserInfo } from '../../newStore/actions/counter'
+
+@connect(({ counter }) => ({
+  counter
+}), (dispatch) => ({
+  onGetUserInfo(params) {
+    dispatch(getUserInfo(params))
+  },
+
+}))
 export default class Home extends Component {
   static externalClasses = ['main-container']
   config = {
@@ -84,6 +96,8 @@ export default class Home extends Component {
   render() {
 
     const { searchTitle, isShowMoreOptions, moreOptionsList } = this.state
+    console.log('counter',this.props.counter)
+
     return (
       <View className='main-container'>
 

@@ -1,12 +1,24 @@
 import Taro, { Component } from '@tarojs/taro'
+import { connect } from '@tarojs/redux'
+
 import { View, Text, Image, } from '@tarojs/components'
 import { AtButton, AtTabs, AtTabsPane, AtInput, AtForm, } from 'taro-ui'
 
 import './login.scss'
 
 import request from '../../api/request'
+import api from '../../api'
 
+import { getUserInfo } from '../../newStore/actions/counter'
 
+@connect(({ counter }) => ({
+  counter
+}), (dispatch) => ({
+  onGetUserInfo(params) {
+    dispatch(getUserInfo(params))
+  },
+
+}))
 export default class Login extends Component {
   static externalClasses = ['main-container']
   config = {
@@ -30,7 +42,7 @@ export default class Login extends Component {
   componentWillMount() { }
 
   componentDidMount() {
-    this.getCaptcha()
+    // this.getCaptcha()
   }
 
   componentWillUnmount() { }
@@ -49,9 +61,7 @@ export default class Login extends Component {
     }).catch(e => { console.log(e) })
   }
   signUp() {
-
     const { username, password, rePassword, verifyCode } = this.state
-
     if (username === '') {
       Taro.showToast({
         title: '请输入账号',
@@ -77,25 +87,91 @@ export default class Login extends Component {
         name: username,
         pass: password
       }
-      console.log(params)
-      // this.loading = true
-      // api.signUp(params).then(r => {
-      //   if (r.code === 0) {
-      //     this.toast('注册成功', 'success')
-      //     this.signForm = {
-      //       name: '',
-      //       pass: '',
-      //       repass: '',
-      //       regcode: ''
-      //     }
-      //     this.tabIndex = 0
-      //   } else if (r.code === 1) {
-      //     this.toast('账号已存在', 'warn')
-      //   } else {
-      //     this.toast('注册失败', 'warn')
-      //   }
-      //   this.loading = false
-      // })
+      Taro.showLoading({
+        title: '加载中'
+      })
+      api.signUp(params).then(r => {
+
+        if (r.data.code === 0) {
+
+          Taro.showToast({
+            title: '注册成功',
+            icon: 'success',
+          })
+
+          this.setState({
+            current: 0,
+            username: '',
+            password: '',
+            rePassword: '',
+            verifyCode: '',
+          })
+        } else if (r.data.code === 1) {
+          Taro.showToast({
+            title: '账号已存在',
+            icon: 'none',
+          })
+
+        } else {
+          Taro.showToast({
+            title: '注册失败',
+            icon: 'none',
+          })
+
+        }
+        Taro.hideLoading()
+      })
+    }
+  }
+  login() {
+    const { username, password, rePassword, verifyCode } = this.state
+
+    if (username === '') {
+      Taro.showToast({
+        title: '请输入账号',
+        icon: 'none',
+      })
+    } else if (password === '') {
+      Taro.showToast({
+        title: '请输入密码',
+        icon: 'none',
+      })
+    } else {
+      let params = {
+        name: username,
+        pass: password
+      }
+      Taro.showLoading({
+        title: '加载中'
+      })
+      api.login(params).then(r => {
+        if (r.data.code === 0) {
+          Taro.showToast({
+            title: '登录成功',
+            icon: 'success',
+          })
+          //  this.$store.dispatch('getUserInfo', this)
+          this.props.onGetUserInfo(Taro)
+          this.setState({
+            current: 0,
+            username: '',
+            password: '',
+            rePassword: '',
+            verifyCode: '',
+          })
+        } else if (r.data.code === -1) {
+          Taro.showToast({
+            title: '账号不存在或密码错误',
+            icon: 'none',
+          })
+        } else {
+          Taro.showToast({
+            title: '登录失败',
+            icon: 'none',
+          })
+        }
+        Taro.hideLoading()
+      })
     }
   }
 
@@ -107,7 +183,7 @@ export default class Login extends Component {
       rePassword: '',
       verifyCode: ''
     }, () => {
-      this.getCaptcha()
+      // this.getCaptcha()
     })
   }
   handleUsername(value) {
@@ -134,6 +210,7 @@ export default class Login extends Component {
   render() {
     const tabList = [{ title: '登录' }, { title: '注册' }]
     const { captchaBase64 } = this.state
+
     return (
       <AtTabs current={this.state.current} tabList={tabList} onClick={this.handleTabClick.bind(this)}>
 
@@ -171,7 +248,7 @@ export default class Login extends Component {
 
 
           </AtForm>
-          <AtButton type='primary'>登录</AtButton>
+          <AtButton type='primary' onClick={this.login.bind(this)}>登录</AtButton>
         </AtTabsPane>
         <AtTabsPane current={this.state.current} index={1}>
           <AtForm>

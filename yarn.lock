@@ -1908,13 +1908,6 @@ caniuse-lite@^1.0.30000844, caniuse-lite@^1.0.30000859, caniuse-lite@^1.0.300008
   resolved "https://registry.npm.taobao.org/caniuse-lite/download/caniuse-lite-1.0.30000989.tgz#b9193e293ccf7e4426c5245134b8f2a56c0ac4b9"
   integrity sha1-uRk+KTzPfkQmxSRRNLjypWwKxLk=
 
-captchapng@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.npm.taobao.org/captchapng/download/captchapng-0.0.1.tgz#17605d4076fec6370791061aa814399e18c893ea"
-  integrity sha1-F2BdQHb+xjcHkQYaqBQ5nhjIk+o=
-  dependencies:
-    pnglib ""
-
 caseless@~0.12.0:
   version "0.12.0"
   resolved "https://registry.npm.taobao.org/caseless/download/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
@@ -6346,11 +6339,6 @@ pkg-dir@^3.0.0:
   dependencies:
     find-up "^3.0.0"
 
-pnglib@:
-  version "0.0.1"
-  resolved "https://registry.npm.taobao.org/pnglib/download/pnglib-0.0.1.tgz#f9ab6f9c688f4a9d579ad8be28878a716e30c096"
-  integrity sha1-+atvnGiPSp1Xmti+KIeKcW4wwJY=
-
 portfinder@^1.0.9:
   version "1.0.24"
   resolved "https://registry.npm.taobao.org/portfinder/download/portfinder-1.0.24.tgz?cache=0&sync_timestamp=1567711866999&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fportfinder%2Fdownload%2Fportfinder-1.0.24.tgz#11efbc6865f12f37624b6531ead1d809ed965cfa"
@@ -7439,6 +7427,11 @@ set-blocking@^2.0.0, set-blocking@~2.0.0:
   version "2.0.0"
   resolved "https://registry.npm.taobao.org/set-blocking/download/set-blocking-2.0.0.tgz#045f9782d011ae9a6803ddd382b24392b3d890f7"
   integrity sha1-BF+XgtARrppoA93TgrJDkrPYkPc=
+
+set-cookie-parser@^2.3.8:
+  version "2.4.0"
+  resolved "https://registry.npm.taobao.org/set-cookie-parser/download/set-cookie-parser-2.4.0.tgz#0b3b2ca28188d830fe7a0a04308cdc8e632d8327"
+  integrity sha1-CzssooGI2DD+egoEMIzcjmMtgyc=
 
 set-value@^2.0.0, set-value@^2.0.1:
   version "2.0.1"
@@ -8578,11 +8571,6 @@ vary@~1.1.2:
   resolved "https://registry.npm.taobao.org/vary/download/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
   integrity sha1-IpnwLG3tMNSllhsLn3RSShj2NPw=
 
-vchat-regcode@^0.0.3:
-  version "0.0.3"
-  resolved "https://registry.npm.taobao.org/vchat-regcode/download/vchat-regcode-0.0.3.tgz#bdee478394f609acd3fefef76ded19468ff3791b"
-  integrity sha1-ve5Hg5T2CazT/v73be0ZRo/zeRs=
-
 verror@1.10.0:
   version "1.10.0"
   resolved "https://registry.npm.taobao.org/verror/download/verror-1.10.0.tgz#3a105ca17053af55d6e270c1f8288682e18da400"
@@ -8648,6 +8636,13 @@ wcwidth@^1.0.1:
   integrity sha1-8LDc+RW8X/FSivrbLA4XtTLaL+g=
   dependencies:
     defaults "^1.0.3"
+
+weapp-cookie@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.npm.taobao.org/weapp-cookie/download/weapp-cookie-1.4.0.tgz#44b83d6953a96bc619a34f9d770de0ceb24b5616"
+  integrity sha1-RLg9aVOpa8YZo0+ddw3gzrJLVhY=
+  dependencies:
+    set-cookie-parser "^2.3.8"
 
 webpack-chain@4.9.0:
   version "4.9.0"
