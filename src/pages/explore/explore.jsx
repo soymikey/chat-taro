@@ -35,7 +35,6 @@ export default class Explore extends Component {
         <AtList >
           <AtListItem
             arrow='right'
-
             title='朋友圈'
             thumb={moment}
           />

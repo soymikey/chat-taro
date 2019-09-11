@@ -10,7 +10,8 @@ import dataEmojiJson from '../../../utils/emoji.json'
 
 export default class Conversation extends Component {
   config = {
-    navigationBarTitleText: this.$router.params.id || 'unknown'
+    navigationBarTitleText: this.$router.params.id || 'unknown',
+    enablePullDownRefresh:false
   }
   constructor() {
     super()
@@ -75,7 +76,8 @@ export default class Conversation extends Component {
           if (item.type === 'me') {
             return <View className='at-row at-row__justify--end my-conversation-wrapper' key={index}>
               <View className='at-col at-col-8 at-col--wrap my-text-wrapper'>{item.content}</View>
-              <View className='at-col at-col-2'><AtAvatar circle image={me}></AtAvatar></View>
+              <View className='at-col at-col-2' style='text-align:right'><View style='display:inline-block' ><AtAvatar circle image={me}></AtAvatar></View></View>
+
             </View>
           }
           return <View className='at-row  other-conversation-wrapper' key={index}>

@@ -23,15 +23,13 @@ class App extends Component {
 
     pages: [
       // 'pages/login/login',
-      'pages/home/conversation/conversation',
+
       'pages/home/home',
+      'pages/home/conversation/conversation',
+      'pages/home/addFriend/addFriend',
       'pages/user/user',
       'pages/explore/explore',
       'pages/contact/contact',
-
-
-
-
     ],
     window: {
       backgroundTextStyle: 'light',
