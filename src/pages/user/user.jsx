@@ -1,9 +1,10 @@
 import Taro, { Component } from '@tarojs/taro'
+import { connect } from '@tarojs/redux'
+
 import { View, Text } from '@tarojs/components'
 import { AtList, AtListItem, } from "taro-ui"
-
+import {imageBase} from '../../api/baseUrl'
 import './user.scss'
-import avartar1 from '../../assets/avartar.png'
 
 import pay from '../../assets/userpng/pay.png'
 import collection from '../../assets/userpng/collection.png'
@@ -11,6 +12,12 @@ import album from '../../assets/userpng/album.png'
 import card_bag from '../../assets/userpng/card_bag.png'
 import emoji from '../../assets/userpng/emoji.png'
 import setting from '../../assets/userpng/setting.png'
+
+@connect(
+  state => ({
+    user:state.counter.user
+  }),
+)
 
 export default class User extends Component {
   config = {
@@ -34,15 +41,16 @@ export default class User extends Component {
   }
 
   render() {
+const {user}=this.props
     return (
       <View className='main-container'>
         <View className='first-List-Item'>
           <AtList >
             <AtListItem
-              onClick={this.goToUserDetails.bind(this)}
-              title='米高'
-              note='微信号:soymikey'
-              thumb={avartar1}
+              onClick={this.goToUserDetails.bind(this,user)}
+              title={user.name}
+              note={'微信号:'+user.code}
+              thumb={imageBase+user.photo}
               arrow='right'
             />
           </AtList>

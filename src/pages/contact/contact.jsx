@@ -1,19 +1,24 @@
 import Taro, { Component } from '@tarojs/taro'
+import { connect } from '@tarojs/redux'
+
 import { View, Text } from '@tarojs/components'
 import { AtList, AtListItem, AtSearchBar } from "taro-ui"
 
-import avartar1 from '../../assets/avartar.png'
-import avartar2 from '../../assets/me.jpg'
-import avartar3 from '../../assets/other.jpg'
-import avartar4 from '../../assets/logo.png'
-import './contact.scss'
 
+import { imageBase } from '../../api/baseUrl'
+
+import './contact.scss'
+@connect(
+  state => ({
+    conversationsList: state.counter.conversationsList
+  }),
+)
 export default class Contact extends Component {
   config = {
     navigationBarTitleText: '通讯录'
   }
   constructor() {
-    super()
+    super(...arguments)
     this.state = {
       searchTitle: ''
     }
@@ -33,12 +38,12 @@ export default class Contact extends Component {
     console.log(value)
   }
 
-goToFriendVerify(){
-Taro.navigateTo({url:'/pages/contact/friendVerify/friendVerify'})
-}
+  goToFriendVerify() {
+    Taro.navigateTo({ url: '/pages/contact/friendVerify/friendVerify' })
+  }
   render() {
     const { searchTitle } = this.state
-
+    const { conversationsList } = this.props
     return (
       <View className='main-container'>
         <AtSearchBar
@@ -46,28 +51,18 @@ Taro.navigateTo({url:'/pages/contact/friendVerify/friendVerify'})
           onChange={this.onChangeSearch.bind(this)}
         />
         <AtList>
+          {conversationsList.length ? conversationsList.map((item) => {
+            return <AtListItem key={item.id}
+              onClick={this.goToFriendVerify.bind(this)}
+              title={item.name}
+              thumb={imageBase + item.photo}
+            />
+          }) : null}
 
-          <AtListItem
-            onClick={this.goToFriendVerify.bind(this)}
-            title={avartar1}
-            thumb={avartar1}
-          />
-          <AtListItem
-            title={avartar2}
-            thumb={avartar2}
-          />
-          <AtListItem
-            title={avartar3}
-            thumb={avartar3}
-          />
-          <AtListItem
-            title={avartar4}
-            thumb={avartar4}
-          />
 
         </AtList>
 
-        <View className='bottom-block'><Text>10位联系人</Text></View>
+        <View className='bottom-block'><Text>{conversationsList.length}位联系人</Text></View>
 
       </View>
     )

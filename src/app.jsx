@@ -24,14 +24,13 @@ class App extends Component {
 
     pages: [
       //  'pages/index/index',
-       'pages/login/login',
+      'pages/login/login',
+
       'pages/home/home',//主页
       'pages/home/addFriend/addFriend',// 添加好友
       'pages/commonPages/friendDetails/friendDetails',//好友详情
-
       'pages/home/conversation/conversation',//聊天页面
       'pages/home/friendRequest/friendRequest',//好友请求
-
       'pages/user/user',//个人
       'pages/user/userDetails/userDetails',//个人信息
       'pages/user/userSetting/userSetting',//个人设置

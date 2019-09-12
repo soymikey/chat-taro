@@ -11,14 +11,21 @@ import api from '../../api'
 
 import { getUserInfo } from '../../newStore/actions/counter'
 
-@connect(({ counter }) => ({
-  counter
-}), (dispatch) => ({
-  onGetUserInfo(params) {
-    dispatch(getUserInfo(params))
-  },
+// @connect(({ counter }) => ({
+//   counter
+// }), (dispatch) => ({
+//   onGetUserInfo(params) {
+//     dispatch(getUserInfo(params))
+//   },
 
-}))
+// }))
+
+@connect(
+  state => ({
+   state
+  }),
+  { getUserInfo }
+)
 export default class Login extends Component {
   static externalClasses = ['main-container']
   config = {
@@ -35,8 +42,6 @@ export default class Login extends Component {
       verifyCode: '',
       initCode: '',
       captchaBase64: ''
-
-
     }
   }
   componentWillMount() { }
@@ -151,7 +156,7 @@ export default class Login extends Component {
             icon: 'success',
           })
           //  this.$store.dispatch('getUserInfo', this)
-          this.props.onGetUserInfo(Taro)
+          this.props.getUserInfo(Taro)
           this.setState({
             current: 0,
             username: '',
@@ -210,7 +215,6 @@ export default class Login extends Component {
   render() {
     const tabList = [{ title: '登录' }, { title: '注册' }]
     const { captchaBase64 } = this.state
-
     return (
       <AtTabs current={this.state.current} tabList={tabList} onClick={this.handleTabClick.bind(this)}>
 

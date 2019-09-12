@@ -5,7 +5,7 @@ import {
 
 const INITIAL_STATE = {
   num: 0,
-    user: {}, // 用户基础信息
+  user: {}, // 用户基础信息
   transitionName: '', // 页面过渡动画
   conversationsList: [], // 会话列表
   OnlineUser: {}, // 在线人数
@@ -15,21 +15,21 @@ const INITIAL_STATE = {
   unReadRequest: []// 未读请求消息
 }
 
-export default function counter (state = INITIAL_STATE, action) {
+export default function counter(state = INITIAL_STATE, action) {
   switch (action.type) {
     case SETUSER:
-      console.log('action.payload.data',action.payload.data);
+      console.log('action.payload.data', action.payload.data);
 
       return {
         ...state,
         user: action.payload.data
       }
-     case SETCONVERSATIONLIST:
-       return {
-         ...state,
-         conversationsList: action.payload.data
-       }
-     default:
-       return state
+    case SETCONVERSATIONLIST:
+      return {
+        ...state,
+        conversationsList: action.payload.data
+      }
+    default:
+      return state
   }
 }

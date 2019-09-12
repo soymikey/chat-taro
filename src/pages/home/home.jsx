@@ -3,32 +3,26 @@ import { connect } from '@tarojs/redux'
 
 import { View, Text } from '@tarojs/components'
 import { AtList, AtListItem, AtSearchBar, AtIcon, AtActionSheet, AtActionSheetItem } from "taro-ui"
-
+import { imageBase } from '../../api/baseUrl'
 import './home.scss'
 import avartar1 from '../../assets/avartar.png'
 import avartar2 from '../../assets/me.jpg'
 import avartar3 from '../../assets/other.jpg'
 import avartar4 from '../../assets/logo.png'
 
-import { getUserInfo } from '../../newStore/actions/counter'
+@connect(
+  state => ({
+    conversationsList:state.counter.conversationsList
+  }),
+)
 
-@connect(({ counter }) => ({
-  counter
-}), (dispatch) => ({
-  onGetUserInfo(params) {
-    dispatch(getUserInfo(params))
-  },
-
-}))
 export default class Home extends Component {
   static externalClasses = ['main-container']
   config = {
     navigationBarTitleText: '微信',
-
-
   }
   constructor() {
-    super()
+    super(...arguments)
     this.state = {
       searchTitle: '',
       isShowMoreOptions: false,
@@ -45,10 +39,7 @@ export default class Home extends Component {
 
   componentDidMount() {
     // Taro.removeTabBarBadge({ index: 0,})
-
-
-
-    Taro.showTabBar()
+    // Taro.showTabBar()
 
   }
 
@@ -63,7 +54,7 @@ export default class Home extends Component {
   moreOptionsButtonHandler() {
     this.setState({ isShowMoreOptions: !this.state.isShowMoreOptions }, () => {
       if (this.state.isShowMoreOptions) {
-         Taro.hideTabBar()
+        Taro.hideTabBar()
       } else {
         Taro.showTabBar()
       }
@@ -72,31 +63,31 @@ export default class Home extends Component {
   closeShowMoreOptions() {
 
     this.setState({ isShowMoreOptions: false })
-    Taro.showTabBar().catch(err=>{
+    Taro.showTabBar().catch(err => {
 
     })
   }
   goToConverstationPage(value) {
     Taro.navigateTo({ url: '/pages/home/conversation/conversation?id=' + value, })
   }
-  handlerMoreOptionsItemButton(value){
-    if(value==='添加朋友'){
+  handlerMoreOptionsItemButton(value) {
+    if (value === '添加朋友') {
       Taro.showTabBar()
-       this.setState({ isShowMoreOptions: false },function (){
+      this.setState({ isShowMoreOptions: false }, function () {
         Taro.navigateTo({ url: '/pages/home/addFriend/addFriend', })
-       })
+      })
 
-    }else{
+    } else {
       Taro.showToast({
-        title: value+'功能开发中..',
+        title: value + '功能开发中..',
         icon: 'none',
       })
     }
   }
   render() {
-
     const { searchTitle, isShowMoreOptions, moreOptionsList } = this.state
-    console.log('counter',this.props.counter)
+    const { conversationsList } = this.props
+
 
     return (
       <View className='main-container'>
@@ -115,37 +106,19 @@ export default class Home extends Component {
 
 
         <AtList>
-          <AtListItem
-            title='Taro 开发交流群'
-            note={avartar1}
-            thumb={avartar1}
-            onClick={this.goToConverstationPage.bind(this, avartar1)}
-          />
-          <AtListItem
-            title='Taro 开发交流群'
-            note={avartar2}
-            thumb={avartar2}
-            onClick={this.goToConverstationPage.bind(this, avartar2)}
-          />
-          <AtListItem
-            title='Taro 开发交流群'
-            note={avartar3}
-            thumb={avartar3}
-            onClick={this.goToConverstationPage.bind(this, avartar3)}
-          />
-          <AtListItem
-            title='Taro 开发交流群'
-            note={avartar4}
-            thumb={avartar4}
-            onClick={this.goToConverstationPage.bind(this, avartar4)}
-          />
-
-
+          {conversationsList.length ? conversationsList.map((item) => {
+            return <AtListItem key={item.id}
+              title={item.name}
+              note={item.photo}
+              thumb={imageBase + item.photo}
+              onClick={this.goToConverstationPage.bind(this, item.id)}
+            />
+          }) : null}
         </AtList>
         <AtActionSheet isOpened={isShowMoreOptions} onClose={this.closeShowMoreOptions.bind(this)}>
 
           {moreOptionsList.map((item, index) => {
-            return <AtActionSheetItem key={index} onClick={this.handlerMoreOptionsItemButton.bind(this,item.name)}>{item.name}</AtActionSheetItem>
+            return <AtActionSheetItem key={index} onClick={this.handlerMoreOptionsItemButton.bind(this, item.name)}>{item.name}</AtActionSheetItem>
           })}
 
         </AtActionSheet>
