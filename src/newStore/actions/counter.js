@@ -1,6 +1,9 @@
 import {
   SETCONVERSATIONLIST,
-  SETUSER
+  SETUSER,
+  SETUNREAD,
+  SETUNREADREQUEST,
+  SETCURRSATION
 } from '../constants/counter'
 
 // export const add = () => {
@@ -30,20 +33,17 @@ import api from '../../api'
 export const getUserInfo = (that) => { // 获取用户登录信息
 
   return dispatch => api.getUserInfo().then(r => {
-
-
     if (r.data.code === 0) {
-
       dispatch({ type: SETUSER, payload: { data: r.data.data } })
-      dispatch({ type: SETCONVERSATIONLIST, payload: { data: r.data.data.conversationsList } })
+      dispatch({ type: SETCONVERSATIONLIST, payload: r.data.data.conversationsList  })
 
       getVchatInfo()
       if (that) {
         that.hideLoading()
-        that.reLaunch({url:'/pages/home/home'})
+        that.reLaunch({ url: '/pages/home/home' })
       }
     } else {
-      dispatch({ type: SETUSER, payload: { data: '' } })
+      dispatch({ type: SETUSER, payload:'' })
 
     }
   })
@@ -68,6 +68,32 @@ export const getVchatInfo = () => { // 获取官方账号信息
     }
   })
 }
+
+export const setUnRead = data => {
+  return dispatch => {
+    dispatch({
+      type: SETUNREAD,
+      payload: data
+    })
+  }
+}
+export const setUnReadRequest = data => {
+  return dispatch => {
+    dispatch({
+      type: SETUNREADREQUEST,
+      payload: data
+    })
+  }
+}
+export const setCurrSation = (data) => {
+  return dispatch => {
+    dispatch({
+      type: SETUNREADREQUEST,
+      payload: data
+    })
+  }
+}
+
 
 
 

@@ -1,6 +1,9 @@
 import {
   SETCONVERSATIONLIST,
-  SETUSER
+  SETUSER,
+  SETUNREAD,
+  SETUNREADREQUEST,
+  SETCURRSATION
 } from '../constants/counter'
 
 const INITIAL_STATE = {
@@ -16,19 +19,62 @@ const INITIAL_STATE = {
 }
 
 export default function counter(state = INITIAL_STATE, action) {
-  switch (action.type) {
+  const { type, payload } = action
+  switch (type) {
     case SETUSER:
-      console.log('action.payload.data', action.payload.data);
 
       return {
         ...state,
-        user: action.payload.data
+        user: payload
       }
     case SETCONVERSATIONLIST:
       return {
         ...state,
-        conversationsList: action.payload.data
+        conversationsList: payload
       }
+    case SETUNREAD:
+      console.log('SETUNREAD')
+      if (payload.clear) {
+        state.unRead.forEach(v => {
+          if (v.roomid === payload.roomid) {
+            v.count = 0
+          }
+        })
+        return state
+      }
+
+      let unRead = state.unRead.filter(v => v.roomid === payload.roomid)
+
+      if (unRead.length) {
+        state.unRead.forEach(v => {
+          if (v.roomid === payload.roomid) {
+            if (payload.add) {
+              v.count++
+              v.lastMes = payload.lastMes
+            } else {
+              v.count = payload.count
+              v.lastMes = payload.lastMes
+            }
+          }
+        })
+        return state
+      } else {
+        state.unRead.push({ roomid: payload.roomid, count: payload.count, lastMes: payload.lastMes })
+        return state
+      }
+    case SETUNREADREQUEST:
+      if (payload.reset) {
+        state.unReadRequest = payload.content
+      } else {
+        if (Array.isArray(payload.content)) {
+          state.unReadRequest = state.unReadRequest.concat(payload.content)
+        } else {
+          state.unReadRequest.push(payload.content)
+        }
+      }
+      case SETCURRSATION:
+          state.currSation = payload
+
     default:
       return state
   }

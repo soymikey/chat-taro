@@ -1,19 +1,23 @@
+/* eslint-disable taro/this-props-function */
 import Taro, { Component } from '@tarojs/taro'
 import { connect } from '@tarojs/redux'
 
 import { View, Text } from '@tarojs/components'
 import { AtList, AtListItem, AtSearchBar, AtIcon, AtActionSheet, AtActionSheetItem } from "taro-ui"
 import { imageBase } from '../../api/baseUrl'
+import { formatTime } from '../../utils/formater'
+import { setUnRead, setUnReadRequest, setCurrSation } from '../../newStore/actions/counter'
+
 import './home.scss'
-import avartar1 from '../../assets/avartar.png'
-import avartar2 from '../../assets/me.jpg'
-import avartar3 from '../../assets/other.jpg'
-import avartar4 from '../../assets/logo.png'
+
+
 
 @connect(
   state => ({
-    conversationsList:state.counter.conversationsList
-  }),
+    conversationsList: state.counter.conversationsList,
+    user: state.counter.user.data,
+    currSation: state.counter.currSation
+  }), { setUnRead, setUnReadRequest, setCurrSation }
 )
 
 export default class Home extends Component {
@@ -35,12 +39,65 @@ export default class Home extends Component {
     }
   }
 
-  componentWillMount() { }
+  componentWillMount() {
+    Taro.$socket.on('getHistoryMessages', mesdata => {
+      console.log('received news: ', mesdata)
+      let data = mesdata.filter(
+        v =>
+          v.read.indexOf(this.props.user.name) === -1 &&
+          v.type !== 'info' &&
+          v.type !== 'validate'
+      )
+      let validate = mesdata.filter(
+        v => v.type === 'validate' && v.status === '0'
+      )
+      // 聊天历史记录
+      if (data.length) {
+        this.props.setUnRead({
+          roomid: data[0].roomid,
+          count: data.length,
+          lastMes: data[data.length - 1]
+        })
+
+      } else {
+        if (mesdata.length) {
+          this.props.setUnRead({
+            roomid: mesdata[0].roomid,
+            count: 0,
+            lastMes: mesdata[mesdata.length - 1]
+          })
+        } else {
+
+          this.props.setUnRead({ roomid: 0, count: 0, lastMes: {} })
+        }
+      }
+      if (validate.length) {
+        this.props.setUnReadRequest({
+          reset: false,
+          content: validate
+        })
+      }
+    })
+    Taro.$socket.on('mes', r => {
+      this.props.setUnRead({
+        roomid: r.roomid,
+        add: true,
+        count: 1,
+        lastMes: r.mes
+      })
+    })
+
+  }
 
   componentDidMount() {
-    // Taro.removeTabBarBadge({ index: 0,})
-    // Taro.showTabBar()
+    this.joinRoom()
 
+  }
+  componentWillReceiveProps(nextProps) {
+    if (this.props.conversationsList !== nextProps.conversationsList) {
+      console.log('conversationsList Props不一样')
+      this.joinRoom()
+    }
   }
 
   componentWillUnmount() { }
@@ -48,9 +105,30 @@ export default class Home extends Component {
   componentDidShow() { }
 
   componentDidHide() { }
+
+  //======================================
+  joinRoom() {
+    if (!this.props.user.name) {
+      return
+    }
+    this.props.conversationsList.forEach(v => {
+      let val = {
+        name: this.props.user.name,
+        time: formatTime(new Date()),
+        avatar: this.props.user.photo,
+        roomid: v.id
+      }
+
+      let room = { roomid: v.id, offset: 1, limit: 200 }
+      Taro.$socket.emit('join', val)
+      Taro.$socket.emit('getHistoryMessages', room)
+    })
+  }
+  //========================================
   onChangeSearch(value) {
     console.log(value)
   }
+
   moreOptionsButtonHandler() {
     this.setState({ isShowMoreOptions: !this.state.isShowMoreOptions }, () => {
       if (this.state.isShowMoreOptions) {
@@ -68,7 +146,8 @@ export default class Home extends Component {
     })
   }
   goToConverstationPage(value) {
-    Taro.navigateTo({ url: '/pages/home/conversation/conversation?id=' + value, })
+    this.props.setCurrSation(value)
+    Taro.navigateTo({ url: '/pages/home/conversation/conversation?id=' + value.id})
   }
   handlerMoreOptionsItemButton(value) {
     if (value === '添加朋友') {
@@ -85,10 +164,10 @@ export default class Home extends Component {
     }
   }
   render() {
+    console.log('home user', this.props.user)
+
     const { searchTitle, isShowMoreOptions, moreOptionsList } = this.state
     const { conversationsList } = this.props
-
-
     return (
       <View className='main-container'>
 
@@ -111,7 +190,7 @@ export default class Home extends Component {
               title={item.name}
               note={item.photo}
               thumb={imageBase + item.photo}
-              onClick={this.goToConverstationPage.bind(this, item.id)}
+              onClick={this.goToConverstationPage.bind(this, item)}
             />
           }) : null}
         </AtList>

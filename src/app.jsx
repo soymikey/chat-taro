@@ -1,6 +1,7 @@
 import '@tarojs/async-await'
 import Taro, { Component } from '@tarojs/taro'
 import { Provider } from '@tarojs/redux'
+
 import 'taro-ui/dist/style/index.scss' // 全局引入一次即可
 import 'weapp-cookie'
 import Index from './pages/index'
@@ -15,6 +16,14 @@ import './app.scss'
 //   require('nerv-devtools')
 // }
 
+import io from './webSocket/socket.io'
+
+const socket = io('http://localhost:9988')
+
+
+
+
+
 const store = configStore()
 
 class App extends Component {
@@ -25,11 +34,14 @@ class App extends Component {
     pages: [
       //  'pages/index/index',
       'pages/login/login',
-
       'pages/home/home',//主页
+      'pages/home/conversation/conversation',//聊天页面
+
+
+
       'pages/home/addFriend/addFriend',// 添加好友
       'pages/commonPages/friendDetails/friendDetails',//好友详情
-      'pages/home/conversation/conversation',//聊天页面
+
       'pages/home/friendRequest/friendRequest',//好友请求
       'pages/user/user',//个人
       'pages/user/userDetails/userDetails',//个人信息
@@ -75,8 +87,21 @@ class App extends Component {
     }]
     }
   }
+  componentWillMount(){
+    socket.on('connect', d => {
+      console.log('连接成功',d)
+    })
+    socket.on('joined', (OnlineUser) => {
+      console.log('加入了', OnlineUser)
+      // this.$store.commit('setOnlineUser', OnlineUser)
+    })
 
-  componentDidMount() { }
+    Taro.$socket = socket
+  }
+
+  componentDidMount() {
+
+   }
 
   componentDidShow() { }
 

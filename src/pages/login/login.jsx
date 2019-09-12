@@ -4,13 +4,12 @@ import { connect } from '@tarojs/redux'
 import { View, Text, Image, } from '@tarojs/components'
 import { AtButton, AtTabs, AtTabsPane, AtInput, AtForm, } from 'taro-ui'
 
-import './login.scss'
+
 
 import request from '../../api/request'
 import api from '../../api'
-
 import { getUserInfo } from '../../newStore/actions/counter'
-
+import './login.scss'
 // @connect(({ counter }) => ({
 //   counter
 // }), (dispatch) => ({
@@ -44,10 +43,14 @@ export default class Login extends Component {
       captchaBase64: ''
     }
   }
+
   componentWillMount() { }
 
   componentDidMount() {
-    // this.getCaptcha()
+    this.setState({username:'m1',password:'1'},()=>{
+      this.login()
+    })
+
   }
 
   componentWillUnmount() { }
@@ -55,6 +58,7 @@ export default class Login extends Component {
   componentDidShow() { }
 
   componentDidHide() { }
+
   getCaptcha() {
     request.get('captcha/get').then(res => {
       const { code, data, state } = res.data
