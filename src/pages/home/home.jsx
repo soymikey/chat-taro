@@ -2,11 +2,11 @@
 import Taro, { Component } from '@tarojs/taro'
 import { connect } from '@tarojs/redux'
 
-import { View, Text } from '@tarojs/components'
-import { AtList, AtListItem, AtSearchBar, AtIcon, AtActionSheet, AtActionSheetItem } from "taro-ui"
+import { View, Text, Image } from '@tarojs/components'
+import { AtList, AtListItem, AtSearchBar, AtIcon, AtActionSheet, AtActionSheetItem, AtBadge, AtAvatar } from "taro-ui"
 import { imageBase } from '../../api/baseUrl'
 import { formatTime } from '../../utils/formater'
-import { setUnRead, setUnReadRequest, setCurrSation } from '../../newStore/actions/counter'
+import { setUnRead, setUnReadRequest, setCurrSation, test } from '../../newStore/actions/counter'
 
 import './home.scss'
 
@@ -16,8 +16,9 @@ import './home.scss'
   state => ({
     conversationsList: state.counter.conversationsList,
     user: state.counter.user.data,
-    currSation: state.counter.currSation
-  }), { setUnRead, setUnReadRequest, setCurrSation }
+    currSation: state.counter.currSation,
+    unRead: state.counter.unRead
+  }), { setUnRead, setUnReadRequest, setCurrSation, test }
 )
 
 export default class Home extends Component {
@@ -30,6 +31,7 @@ export default class Home extends Component {
     this.state = {
       searchTitle: '',
       isShowMoreOptions: false,
+      contactList: [],
       moreOptionsList: [
         { name: '发起群聊' },
         { name: '添加朋友' },
@@ -50,6 +52,7 @@ export default class Home extends Component {
       let validate = mesdata.filter(
         v => v.type === 'validate' && v.status === '0'
       )
+
       // 聊天历史记录
       if (data.length) {
         this.props.setUnRead({
@@ -82,7 +85,7 @@ export default class Home extends Component {
         roomid: r.roomid,
         add: true,
         count: 1,
-        lastMes: r.mes
+        lastMes: r
       })
     })
 
@@ -90,13 +93,31 @@ export default class Home extends Component {
 
   componentDidMount() {
     this.joinRoom()
-
   }
   componentWillReceiveProps(nextProps) {
     if (this.props.conversationsList !== nextProps.conversationsList) {
-      console.log('conversationsList Props不一样')
       this.joinRoom()
     }
+    if (this.props.unRead !== nextProps.unRead) {
+      console.log('nextProps.unRead', nextProps.unRead)
+      const newContactList = [...this.state.contactList]
+      newContactList.forEach((v, i) => {
+        nextProps.unRead.forEach(m => {
+
+          if (v.id === m.roomid) {
+            console.log('m.count', m.count)
+            Object.assign(newContactList[i], { unRead: m.count, lastMes: m.lastMes.mes })
+            // this.$set(
+            //   this.contactsList,
+            //   i,
+            //   Object.assign({}, v, { unRead: m.count, lastMes: m.lastMes.mes })
+            // )
+          }
+        })
+      })
+      this.setState({ contactList: newContactList })
+    }
+
   }
 
   componentWillUnmount() { }
@@ -117,6 +138,7 @@ export default class Home extends Component {
         avatar: this.props.user.photo,
         roomid: v.id
       }
+      this.setState({ contactList: JSON.parse(JSON.stringify(this.props.conversationsList)) })
 
       let room = { roomid: v.id, offset: 1, limit: 200 }
       Taro.$socket.emit('join', val)
@@ -146,7 +168,7 @@ export default class Home extends Component {
   }
   goToConverstationPage(value) {
     this.props.setCurrSation(value)
-    Taro.navigateTo({ url: '/pages/home/conversation/conversation?id=' + value.id})
+    Taro.navigateTo({ url: '/pages/home/conversation/conversation?id=' + value.id })
   }
   handlerMoreOptionsItemButton(value) {
     if (value === '添加朋友') {
@@ -164,8 +186,10 @@ export default class Home extends Component {
   }
   render() {
 
-    const { searchTitle, isShowMoreOptions, moreOptionsList } = this.state
-    const { conversationsList } = this.props
+    const { searchTitle, isShowMoreOptions, moreOptionsList, contactList } = this.state
+    const { unRead } = this.props
+    console.log('unRead', unRead)
+    console.log('contactList', contactList)
     return (
       <View className='main-container'>
 
@@ -183,13 +207,27 @@ export default class Home extends Component {
 
 
         <AtList>
-          {conversationsList.length ? conversationsList.map((item) => {
-            return <AtListItem key={item.id}
+          {contactList.length ? contactList.map((item) => {
+
+            return item.unRead !== 0 ? <AtBadge value={item.unRead} key={item.id}>
+
+              <AtListItem
+
+                title={item.name}
+                note={item.lastMes}
+                thumb={imageBase + item.photo}
+                onClick={this.goToConverstationPage.bind(this, item)}
+              ></AtListItem>
+
+            </AtBadge> : <AtListItem
+
               title={item.name}
-              note={item.photo}
+              note={item.lastMes}
               thumb={imageBase + item.photo}
               onClick={this.goToConverstationPage.bind(this, item)}
-            />
+            ></AtListItem>
+
+
           }) : null}
         </AtList>
         <AtActionSheet isOpened={isShowMoreOptions} onClose={this.closeShowMoreOptions.bind(this)}>

@@ -102,6 +102,7 @@ export default class Conversation extends Component {
 
   }
   componentWillReceiveProps(nextProps) {
+    console.log('conversation-nextProps',nextProps)
 
   }
 
@@ -141,7 +142,6 @@ export default class Conversation extends Component {
     this.setState({ iSshowOptions: !this.state.iSshowOptions, iSshowEmoji: false })
   }
   send(type, params) {
-
     if (!this.state.message && !params) {
       return
     }
@@ -177,7 +177,7 @@ export default class Conversation extends Component {
       count: 0,
       lastMes: val
     })
-    if (type === 'mess') {
+    if (type === 'mes') {
       this.setState({ message: '' })
     }
 
@@ -218,7 +218,7 @@ export default class Conversation extends Component {
                 <AtInput
                   type='text'
                   maxLength='180'
-                  value={this.state.inputValue}
+                  value={this.state.message}
                   onChange={this.handleInputChange.bind(this)}
                 >
                 </AtInput>

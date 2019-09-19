@@ -20,11 +20,6 @@ import io from './webSocket/socket.io-mp'
 importWeappCookieOnDiffPlatform()
 
 const socket = io('http://localhost:9988')
-
-
-
-
-
 const store = configStore()
 
 class App extends Component {
@@ -37,9 +32,6 @@ class App extends Component {
       'pages/login/login',
       'pages/home/home',//主页
       'pages/home/conversation/conversation',//聊天页面
-
-
-
       'pages/home/addFriend/addFriend',// 添加好友
       'pages/commonPages/friendDetails/friendDetails',//好友详情
 

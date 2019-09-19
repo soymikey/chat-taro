@@ -33,20 +33,21 @@ export default function counter(state = INITIAL_STATE, action) {
         conversationsList: payload
       }
     case SETUNREAD:
-      console.log('SETUNREAD')
+      const newUnRead=[... state.unRead]
+      console.log('payload',payload)
       if (payload.clear) {
-        state.unRead.forEach(v => {
+        newUnRead.forEach(v => {
           if (v.roomid === payload.roomid) {
             v.count = 0
           }
         })
-        return state
+        return{ ...state,unRead:newUnRead}
       }
 
       let unRead = state.unRead.filter(v => v.roomid === payload.roomid)
 
       if (unRead.length) {
-        state.unRead.forEach(v => {
+        newUnRead.forEach(v => {
           if (v.roomid === payload.roomid) {
             if (payload.add) {
               v.count++
@@ -57,10 +58,11 @@ export default function counter(state = INITIAL_STATE, action) {
             }
           }
         })
-        return state
+        return{ ...state,unRead:newUnRead}
       } else {
-        state.unRead.push({ roomid: payload.roomid, count: payload.count, lastMes: payload.lastMes })
-        return state
+        newUnRead.push({ roomid: payload.roomid, count: payload.count, lastMes: payload.lastMes })
+
+        return  { ...state,unRead:newUnRead}
       }
     case SETUNREADREQUEST:
       if (payload.reset) {

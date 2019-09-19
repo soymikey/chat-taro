@@ -98,6 +98,11 @@ export const setCurrSation = (data) => {
     })
   }
 }
+export const test = (data) => {
+  return dispatch => {
+    dispatch({ type: SETCONVERSATIONLIST, payload: data  })
+  }
+}
 
 
 

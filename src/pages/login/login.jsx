@@ -47,9 +47,9 @@ export default class Login extends Component {
   componentWillMount() { }
 
   componentDidMount() {
-    // this.setState({username:'m1',password:'1'},()=>{
-    //   this.login()
-    // })
+    this.setState({username:'m1',password:'1'},()=>{
+      this.login()
+    })
 
   }
 

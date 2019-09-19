@@ -9,7 +9,7 @@ export const importWeappCookieOnDiffPlatform= ()=> {
 }
 export const navigateToHomeOnDiffPlatform=()=>{
   if (process.env.TARO_ENV==="weapp") {
-   Taro.reLaunch({ url: '/pages/home/home' })
+   Taro.switchTab({ url: '/pages/home/home' })
   }else if(process.env.TARO_ENV==='alipay'){
     Taro.redirectTo({ url: '/pages/home/home' })
   }
