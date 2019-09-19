@@ -47,9 +47,9 @@ export default class Login extends Component {
   componentWillMount() { }
 
   componentDidMount() {
-    this.setState({username:'m1',password:'1'},()=>{
-      this.login()
-    })
+    // this.setState({username:'m1',password:'1'},()=>{
+    //   this.login()
+    // })
 
   }
 
@@ -62,7 +62,6 @@ export default class Login extends Component {
   getCaptcha() {
     request.get('captcha/get').then(res => {
       const { code, data, state } = res.data
-      console.log(res.data)
       this.setState({
         captchaBase64: data
       })

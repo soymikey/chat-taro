@@ -15,7 +15,7 @@ import './app.scss'
 //   require('nerv-devtools')
 // }
 
-import io from './webSocket/socket.io'
+import io from './webSocket/socket.io-mp'
 //Weappcookie 的插件只需要编译微信小程序的时候才需要导入
 importWeappCookieOnDiffPlatform()
 

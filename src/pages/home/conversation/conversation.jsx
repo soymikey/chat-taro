@@ -50,7 +50,6 @@ export default class Conversation extends Component {
 
 
   componentWillMount() {
-    console.log('conversation will mount')
     Taro.$socket.on('mes', r => {
 
       if (
@@ -172,7 +171,6 @@ export default class Conversation extends Component {
       val.emoji = params.response.data
     }
     this.setState({ chatList: this.state.chatList.concat(Object.assign({}, val, { type: 'mine' })) })
-console.log('val',val)
     Taro.$socket.emit('mes', val)
     this.props.setUnRead({
       roomid: val.roomid,
@@ -186,7 +184,6 @@ console.log('val',val)
   }
   render() {
     const { iSshowEmoji, iSshowOptions, emojiJson, moreOptionsList, chatList } = this.state
-    console.log('chatList',chatList)
     return (
 
       <View className='main-container'>

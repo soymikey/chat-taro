@@ -54,13 +54,13 @@ export default class User extends Component {
         <View className='main-container'>
           <View className='first-List-Item'>
             <AtList >
-              <AtListItem
+              {user?<AtListItem
                 onClick={this.goToUserDetails.bind(this, user)}
                 title={user.name}
                 note={'微信号:' + user.code}
                 thumb={imageBase + user.photo}
                 arrow='right'
-              />
+              />:null}
             </AtList>
           </View>
           <View className='padding-top'></View>

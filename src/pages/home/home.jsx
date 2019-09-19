@@ -41,7 +41,6 @@ export default class Home extends Component {
 
   componentWillMount() {
     Taro.$socket.on('getHistoryMessages', mesdata => {
-      console.log('received news: ', mesdata)
       let data = mesdata.filter(
         v =>
           v.read.indexOf(this.props.user.name) === -1 &&
@@ -164,7 +163,6 @@ export default class Home extends Component {
     }
   }
   render() {
-    console.log('home user', this.props.user)
 
     const { searchTitle, isShowMoreOptions, moreOptionsList } = this.state
     const { conversationsList } = this.props
