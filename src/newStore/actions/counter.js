@@ -28,21 +28,26 @@ import {
 /**
  */
 import api from '../../api'
-
+import {navigateToHomeOnDiffPlatform} from '../../utils/platformImport'
 
 export const getUserInfo = (that) => { // 获取用户登录信息
 
   return dispatch => api.getUserInfo().then(r => {
     if (r.data.code === 0) {
+
       dispatch({ type: SETUSER, payload: { data: r.data.data } })
       dispatch({ type: SETCONVERSATIONLIST, payload: r.data.data.conversationsList  })
-
       getVchatInfo()
       if (that) {
         that.hideLoading()
-        that.reLaunch({ url: '/pages/home/home' })
+        navigateToHomeOnDiffPlatform()
+        // that.redirectTo({ url: '/pages/home/home' })
       }
     } else {
+      that.showToast({
+        title:'获取用户信息失败',
+        icon: 'none',
+      })
       dispatch({ type: SETUSER, payload:'' })
 
     }

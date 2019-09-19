@@ -52,6 +52,7 @@ export default class Conversation extends Component {
   componentWillMount() {
     console.log('conversation will mount')
     Taro.$socket.on('mes', r => {
+
       if (
         r.roomid === this.props.currSation.id
       ) {
@@ -68,6 +69,7 @@ export default class Conversation extends Component {
       }
     })
     Taro.$socket.on('getHistoryMessages', r => {
+
       if (r.length) {
         this.props.setUnRead({
           roomid: r[0].roomid,
@@ -184,6 +186,7 @@ console.log('val',val)
   }
   render() {
     const { iSshowEmoji, iSshowOptions, emojiJson, moreOptionsList, chatList } = this.state
+    console.log('chatList',chatList)
     return (
 
       <View className='main-container'>

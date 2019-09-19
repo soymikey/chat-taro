@@ -154,6 +154,7 @@ export default class Login extends Component {
         title: '加载中'
       })
       api.login(params).then(r => {
+
         if (r.data.code === 0) {
           Taro.showToast({
             title: '登录成功',

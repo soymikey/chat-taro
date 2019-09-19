@@ -3,13 +3,12 @@ import Taro, { Component } from '@tarojs/taro'
 import { Provider } from '@tarojs/redux'
 
 import 'taro-ui/dist/style/index.scss' // 全局引入一次即可
-import 'weapp-cookie'
+import {importWeappCookieOnDiffPlatform} from './utils/platformImport'
 import Index from './pages/index'
 import configStore from './newStore'
 import './styles/iconfont.css'
 import './styles/style.scss'
 import './app.scss'
-
 // 如果需要在 h5 环境中开启 React Devtools
 // 取消以下注释：
 // if (process.env.NODE_ENV !== 'production' && process.env.TARO_ENV === 'h5')  {
@@ -17,6 +16,8 @@ import './app.scss'
 // }
 
 import io from './webSocket/socket.io'
+//Weappcookie 的插件只需要编译微信小程序的时候才需要导入
+importWeappCookieOnDiffPlatform()
 
 const socket = io('http://localhost:9988')
 
